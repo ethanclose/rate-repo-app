@@ -1,0 +1,11 @@
+# Expo
+node_modules
+.expo/*
+dist/
+
+# mine
+**/.env
+
+# fly.io
+**/Dockerfile
+**/.dockerignore

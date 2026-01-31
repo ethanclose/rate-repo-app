@@ -1,0 +1,4 @@
+Copilot : "chat.disableAIFeatures": false // disable all Copilot!
+"editor.inlineSuggest.enabled": true
+Settings > "Geminicodeassist inline"
+geminicodeassist.inlineSuggestions.nextEditPredictions": true // extra predictions
