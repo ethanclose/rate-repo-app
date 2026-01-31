@@ -10,7 +10,6 @@ function getCurrentDate() {
   return (
     <View style={styles.container}>
       <Text>Hella world!</Text>
-
       <Text>Open up App.js to begin working on your app!</Text>
       <Text>Your system uses {Constants.platform.ios ? 'iOS' : Constants.platform.android ? 'Android' : 'Web'}!</Text>
       <Text>Current time: {getCurrentDate()}</Text>
