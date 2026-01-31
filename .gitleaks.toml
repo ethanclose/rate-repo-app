@@ -1,0 +1,20 @@
+title = "React Native & Expo Gitleaks Config"
+
+[extend]
+# This keeps all the standard rules (AWS, GitHub tokens, etc.) active
+useDefault = true
+
+[allowlist]
+description = "Allowlists for common mobile dev noise"
+# Paths to ignore entirely
+paths = [
+    '''node_modules''',
+    '''\.expo''',         # Local Metro artifacts we discussed
+    '''dist''',          # Web/EAS build outputs
+    '''ios/Pods''',      # CocoaPods dependencies
+    '''ios/.*\.xcodeproj''', 
+    '''android/app/build''',
+    '''android/\.gradle''',
+    '''package-lock\.json''',
+    '''yarn\.lock'''
+]
