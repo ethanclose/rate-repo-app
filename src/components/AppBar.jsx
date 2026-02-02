@@ -10,17 +10,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: theme.appBar.height, 
     paddingBottom: 10,
+    alignContent: 'center',
   },
 });
 
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <View horizontal>
         <AppBarTab>
           Repositories
         </AppBarTab>
-      </View>
     </View>
   );
 };

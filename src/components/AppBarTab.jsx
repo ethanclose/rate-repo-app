@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
 const AppBarTab = ({ children, ...props }) => {
   return (
-    <Pressable>
+    <Pressable style={styles.pressable} {...props}>
       <Text style={styles.text}>{children}</Text>
     </Pressable>
   );
