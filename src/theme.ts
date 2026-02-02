@@ -2,7 +2,7 @@ const theme = {
   colors: {
     textPrimary: '#24292e',
     textSecondary: '#586069',
-    primary: 'darkorange',
+    primary: 'darkred',
     backgroundAppBar: '#24292e',
     white: 'white'
   },
@@ -21,6 +21,11 @@ const theme = {
     normal: '400' as const,
     bold: '700' as const,
   },
+  padding: {
+    mini: '5' as const,
+    normal: '10' as const,
+    maxi: '20' as const
+  }
 };
 
 export default theme;

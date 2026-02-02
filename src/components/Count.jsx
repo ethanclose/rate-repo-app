@@ -3,7 +3,8 @@ import Text from './Text'
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingVertical: 5, 
+    paddingHorizontal: 10,
     flexDirection: 'column',
     alignItems: 'center'
   },

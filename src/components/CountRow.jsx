@@ -4,7 +4,6 @@ import Count from './Count'
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    paddingTop: 20,
     flexDirection: 'row', 
     alignItems: 'center',
     justifyContent: 'space-around'
