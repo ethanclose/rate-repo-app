@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   textContainer: {
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'left',
     padding: 10,
