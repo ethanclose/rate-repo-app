@@ -25,11 +25,12 @@ export default defineConfig([{
 
     languageOptions: {
         globals: {
-            ...reactNative.environments["react-native"]["react-native"],
+            ...reactNative.configs.recommended.globals,
+            console: "readonly",
         },
-
         parser: babelParser,
     },
+
 
     settings: {
         react: {
@@ -40,5 +41,6 @@ export default defineConfig([{
     rules: {
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
+        'no-undef': 'error',
     },
 }]);

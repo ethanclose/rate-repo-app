@@ -1,27 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Constants from 'expo-constants';
-export default function App() {
+import Main from './src/components/Main';
 
-function getCurrentDate() {
-  return new Date().toLocaleString();
-}
+const App = () => {
+  return <Main />;
+};
 
-  return (
-    <View style={styles.container}>
-      <Text>Hella world!</Text>
-      <Text>Your system uses {Constants.platform.ios ? 'iOS' : Constants.platform.android ? 'Android' : 'Web'}!</Text>
-      <Text>Current time: {getCurrentDate()}</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

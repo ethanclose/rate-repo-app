@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext", 
+    "jsx": "react-native",
+    "checkJs": true,
+    "moduleResolution": "node"
+  },
+  "exclude": ["node_modules"]
+}
