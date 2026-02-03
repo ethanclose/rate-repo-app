@@ -1,12 +1,12 @@
 import { View, StyleSheet } from 'react-native';
-import Text from './Text'
+import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 5, 
+    paddingVertical: 5,
     paddingHorizontal: 10,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });
 
@@ -21,10 +21,12 @@ export const formatSingleValue = (value) => {
 const Count = ({ text, count }) => {
   return (
     <View style={styles.container}>
-      <Text color="textPrimary" fontWeight="bold">{formatSingleValue(count)}</Text>
+      <Text color="textPrimary" fontWeight="bold">
+        {formatSingleValue(count)}
+      </Text>
       <Text color="textSecondary">{text}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Count
+export default Count;

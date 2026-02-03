@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
 
@@ -6,13 +6,13 @@ const styles = StyleSheet.create({
   pressable: {
     paddingHorizontal: 15,
     justifyContent: 'center',
-    height: '100%', 
+    height: '100%',
   },
   text: {
     color: theme.colors.white,
-    fontSize: theme.fontSizes.heading, 
+    fontSize: theme.fontSizes.heading,
     fontWeight: theme.fontWeights.bold,
-  }
+  },
 });
 
 const AppBarTab = ({ children, ...props }) => {

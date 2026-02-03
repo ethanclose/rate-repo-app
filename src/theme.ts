@@ -4,15 +4,15 @@ const theme = {
     textSecondary: '#586069',
     primary: 'darkred',
     backgroundAppBar: '#24292e',
-    white: 'white'
+    white: 'white',
   },
   fontSizes: {
     body: 14,
     subheading: 16,
-    heading: 20 
+    heading: 20,
   },
   appBar: {
-    height: 100
+    height: 100,
   },
   fonts: {
     main: 'System',
@@ -22,10 +22,10 @@ const theme = {
     bold: '700' as const,
   },
   padding: {
-    mini: '5' as const,
-    normal: '10' as const,
-    maxi: '20' as const
-  }
+    mini: 5,
+    normal: 10,
+    maxi: 20,
+  },
 };
 
 export default theme;

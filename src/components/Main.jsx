@@ -1,7 +1,8 @@
 import Constants from 'expo-constants';
-import { Text, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Route, Routes, Navigate } from 'react-router-native';
+
 import RepositoryList from './RepositoryList';
-import FlexboxExample from './FlexBoxExample';
 import AppBar from './AppBar';
 
 const styles = StyleSheet.create({
@@ -10,19 +11,16 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
   },
-  text: {
-    textAlign: 'center',
-    color: 'darkgreen',
-    fontSize: 24,
-    fontWeight: '700',
-  },
 });
 
 const Main = () => {
   return (
     <View style={styles.container}>
-      <AppBar /> 
-      <RepositoryList />
+      <AppBar />
+      <Routes>
+        <Route path="/" element={<RepositoryList />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </View>
   );
 };

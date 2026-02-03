@@ -1,46 +1,51 @@
-import { defineConfig } from "eslint/config";
-import react from "eslint-plugin-react";
-import reactNative from "eslint-plugin-react-native";
-import babelParser from "@babel/eslint-parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import react from 'eslint-plugin-react';
+import reactNative from 'eslint-plugin-react-native';
+import tsParser from '@typescript-eslint/parser';
+import js from '@eslint/js';
+import prettierPlugin from 'eslint-plugin-prettier';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default defineConfig([{
-    extends: compat.extends("eslint:recommended", "plugin:react/recommended"),
-
+export default [
+  {
+    ignores: ['.expo/**', 'node_modules/**', 'babel.config.js'],
+  },
+  js.configs.recommended,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
-        react,
-        "react-native": reactNative,
+      react,
+      'react-native': reactNative,
+      prettier: prettierPlugin,
     },
-
     languageOptions: {
-        globals: {
-            ...reactNative.configs.recommended.globals,
-            console: "readonly",
-        },
-        parser: babelParser,
+      parser: tsParser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        console: 'readonly',
+        __dirname: 'readonly',
+        module: 'readonly',
+      },
     },
-
-
     settings: {
-        react: {
-            version: "detect",
-        },
+      react: { version: 'detect' },
     },
-
     rules: {
-        "react/prop-types": "off",
-        "react/react-in-jsx-scope": "off",
-        'no-undef': 'error',
+      'no-unused-vars': [
+        'error',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: true,
+        },
+      ],
+      'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react-native/no-unused-styles': 'error',
+      'no-undef': 'error',
+      'prettier/prettier': 'error',
     },
-}]);
+  },
+];
