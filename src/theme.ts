@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 const theme = {
   colors: {
     textBlack: '#24292e',
@@ -18,7 +20,11 @@ const theme = {
     height: 100,
   },
   fonts: {
-    main: 'System',
+    main: Platform.select({
+      android: 'serif', // test with serif
+      ios: 'American Typewriter', // test with Arial, American Typewriter
+      default: 'System',
+    }),
   },
   fontWeights: {
     normal: '400' as const,
