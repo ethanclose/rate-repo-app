@@ -3,9 +3,9 @@ const theme = {
     textBlack: '#24292e',
     textGrey: '#586069',
     darkRed: '#f50905',
-    offWhite: '#e8d4cf',
+    offWhite: '#cbc3c1ff',
     green: '#0b8028',
-    backgroundAppBar: '#24292e',
+    backgroundAppBar: '#c3c7caff',
   },
   fontSizes: {
     body: 14,
