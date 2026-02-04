@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; // Added useState
 import { Text, TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,6 +40,17 @@ const styles = StyleSheet.create({
   },
 });
 
+const validationSchema = yup.object().shape({
+  mass: yup
+    .number()
+    .min(1, 'Weight must be greater or equal to 1')
+    .required('Weight is required'),
+  height: yup
+    .number()
+    .min(0.5, 'Height must be greater or equal to 0.5')
+    .required('Height is required'),
+});
+
 const getBodyMassIndex = (mass, height) => {
   return Math.round(mass / Math.pow(height, 2));
 };
@@ -46,25 +58,32 @@ const getBodyMassIndex = (mass, height) => {
 const BodyMassIndexForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues: { mass: '', height: '' },
+    validationSchema,
     onSubmit,
   });
 
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
         placeholder="Weight (kg)"
-        keyboardType="numeric"
+        style={styles.input}
         value={formik.values.mass}
         onChangeText={formik.handleChange('mass')}
+        onBlur={formik.handleBlur('mass')}
       />
+      {formik.touched.mass && formik.errors.mass && (
+        <Text style={{ color: 'red' }}>{formik.errors.mass}</Text>
+      )}
       <TextInput
-        style={styles.input}
         placeholder="Height (m)"
-        keyboardType="numeric"
+        style={styles.input}
         value={formik.values.height}
         onChangeText={formik.handleChange('height')}
+        onBlur={formik.handleBlur('height')}
       />
+      {formik.touched.height && formik.errors.height && (
+        <Text style={{ color: 'red' }}>{formik.errors.height}</Text>
+      )}
       <Pressable
         style={({ pressed }) => [styles.button, { opacity: pressed ? 0.7 : 1 }]}
         onPress={formik.handleSubmit}
