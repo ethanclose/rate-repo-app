@@ -1,20 +1,9 @@
 import { StyleSheet, TextInput, Pressable, View } from 'react-native';
 import { useFormik } from 'formik';
-import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
-  // container: {
-  //   paddingTop: Constants.statusBarHeight,
-  //   backgroundColor: theme.colors.white,
-  //   flexDirection: 'column',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   height: theme.appBar.height,
-  //   paddingBottom: 20,
-  //   alignContent: 'center',
-  // },
   formContainer: {
     padding: 20,
     gap: 16,

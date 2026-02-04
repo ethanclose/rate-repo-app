@@ -20,7 +20,6 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab to="/">Repositories</AppBarTab>
         <AppBarTab to="/SignIn">Sign In</AppBarTab>
-        <AppBarTab to="/BMI">BMI</AppBarTab>
       </ScrollView>
     </View>
   );
