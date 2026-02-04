@@ -1,15 +1,18 @@
 const theme = {
   colors: {
-    textPrimary: '#24292e',
-    textSecondary: '#586069',
-    primary: 'darkred',
+    textBlack: '#24292e',
+    textGrey: '#586069',
+    darkRed: '#f50905',
+    offWhite: '#e8d4cf',
+    green: '#0b8028',
     backgroundAppBar: '#24292e',
-    white: 'white',
   },
   fontSizes: {
     body: 14,
-    subheading: 16,
-    heading: 20,
+    small: 16,
+    medium: 20,
+    large: 24,
+    big: 30,
   },
   appBar: {
     height: 100,

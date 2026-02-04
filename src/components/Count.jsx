@@ -21,10 +21,10 @@ export const formatSingleValue = (value) => {
 const Count = ({ text, count }) => {
   return (
     <View style={styles.container}>
-      <Text color="textPrimary" fontWeight="bold">
+      <Text color="textBlack" fontWeight="bold">
         {formatSingleValue(count)}
       </Text>
-      <Text color="textSecondary">{text}</Text>
+      <Text color="textGrey">{text}</Text>
     </View>
   );
 };

@@ -4,19 +4,37 @@ import theme from '../theme';
 
 const styles = StyleSheet.create({
   text: {
-    color: theme.colors.textPrimary,
+    color: theme.colors.textBlack,
     fontSize: theme.fontSizes.body,
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeights.normal,
   },
-  colorTextSecondary: {
-    color: theme.colors.textSecondary,
+  colorTextGrey: {
+    color: theme.colors.textGrey,
   },
-  colorPrimary: {
-    color: theme.colors.primary,
+  colorTextBlack: {
+    color: theme.colors.textBlack,
   },
-  fontSizeSubheading: {
-    fontSize: theme.fontSizes.subheading,
+  colorDarkRed: {
+    color: theme.colors.darkRed,
+  },
+  colorOffWhite: {
+    color: theme.colors.offWhite,
+  },
+  colorGreen: {
+    color: theme.colors.green,
+  },
+  fontSizeSmall: {
+    fontSize: theme.fontSizes.small,
+  },
+  fontSizeMedium: {
+    fontSize: theme.fontSizes.medium,
+  },
+  fontSizeLarge: {
+    fontSize: theme.fontSizes.large,
+  },
+  fontSizeBig: {
+    fontSize: theme.fontSizes.big,
   },
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
@@ -26,9 +44,15 @@ const styles = StyleSheet.create({
 const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
   const textStyle = [
     styles.text,
-    color === 'textSecondary' && styles.colorTextSecondary,
-    color === 'primary' && styles.colorPrimary,
-    fontSize === 'subheading' && styles.fontSizeSubheading,
+    color === 'textBlack' && styles.colorTextBlack,
+    color === 'textGrey' && styles.colorTextGrey,
+    color === 'darkRed' && styles.colorDarkRed,
+    color === 'green' && styles.colorGreen,
+    color === 'offWhite' && styles.colorOffWhite,
+    fontSize === 'snall' && styles.fontSizeSmall,
+    fontSize === 'medium' && styles.fontSizeMedium,
+    fontSize === 'large' && styles.fontSizeLarge,
+    fontSize === 'big' && styles.fontSizeBig,
     fontWeight === 'bold' && styles.fontWeightBold,
     style,
   ];

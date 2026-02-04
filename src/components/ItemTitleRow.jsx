@@ -54,7 +54,7 @@ const ItemTitleRow = ({ item }) => {
         <Text color="primary" fontWeight="bold">
           {item.fullName}
         </Text>
-        <Text color="textSecondary">{item.description}</Text>
+        <Text color="textGrey">{item.description}</Text>
         <LanguageBox text={item.language} />
       </View>
     </View>

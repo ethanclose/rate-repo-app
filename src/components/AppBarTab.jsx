@@ -1,4 +1,5 @@
 import { StyleSheet, Pressable } from 'react-native';
+import { Link, useLocation } from 'react-router-native';
 import Text from './Text';
 import theme from '../theme';
 
@@ -10,16 +11,18 @@ const styles = StyleSheet.create({
   },
   text: {
     color: theme.colors.white,
-    fontSize: theme.fontSizes.heading,
+    fontSize: theme.fontSizes.medium,
     fontWeight: theme.fontWeights.bold,
   },
 });
 
-const AppBarTab = ({ children, ...props }) => {
+const AppBarTab = ({ children, to, ...props }) => {
+  const { pathname } = useLocation();
+  const active = pathname === to;
   return (
-    <Pressable style={styles.pressable} {...props}>
-      <Text style={styles.text}>{children}</Text>
-    </Pressable>
+    <Link to={to} component={Pressable} style={styles.pressable} {...props}>
+      <Text style={{ ...styles.text, color: active ? 'white' : 'gray' }}>{children}</Text>
+    </Link>
   );
 };
 
