@@ -5,15 +5,39 @@ import Text from './Text';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: theme.colors.white,
-    flexDirection: 'column',
-    justifyContent: 'center',
+  // container: {
+  //   paddingTop: Constants.statusBarHeight,
+  //   backgroundColor: theme.colors.white,
+  //   flexDirection: 'column',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   height: theme.appBar.height,
+  //   paddingBottom: 20,
+  //   alignContent: 'center',
+  // },
+  formContainer: {
+    padding: 20,
+    gap: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 14,
+    fontSize: 16,
+    backgroundColor: '#fff',
+  },
+  button: {
+    backgroundColor: theme.colors.textBlack,
+    padding: 16,
+    borderRadius: 8,
     alignItems: 'center',
-    height: theme.appBar.height,
-    paddingBottom: 20,
-    alignContent: 'center',
+    marginTop: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 
@@ -27,27 +51,30 @@ const SignInForm = ({ onSubmit }) => {
     initialValues,
     onSubmit,
   });
+
   return (
     <View>
-      <View style={styles.container}>
-        <Text color="green" fontWeight="bold" fontSize="medium">
-          The sign-in view
-        </Text>
-      </View>
-      <View>
+      <View style={styles.formContainer}>
         <TextInput
-          placeholder="username"
+          style={styles.input}
+          placeholder="Username"
+          placeholderTextColor="#999"
           value={formik.values.username}
           onChangeText={formik.handleChange('username')}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
         <TextInput
-          placeholder="password"
-          secureTextEntry="true"
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#999"
+          secureTextEntry={true}
           value={formik.values.password}
           onChangeText={formik.handleChange('password')}
+          autoCapitalize="none"
         />
-        <Pressable onPress={formik.handleSubmit}>
-          <Text>Log In</Text>
+        <Pressable style={styles.button} onPress={formik.handleSubmit}>
+          <Text style={styles.buttonText}>Log In</Text>
         </Pressable>
       </View>
     </View>
