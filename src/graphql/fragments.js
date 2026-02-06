@@ -16,11 +16,6 @@ export const REPO_DETAILS = gql`
     reviewCount
     stargazersCount
     url
-    user {
-      id
-      username
-    }
-    userHasReviewed
     watchersCount
   }
 `;

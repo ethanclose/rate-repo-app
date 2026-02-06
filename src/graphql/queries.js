@@ -5,7 +5,7 @@ export const GET_REPOSITORIES = gql`
   query getRepositories {
     repositories {
       edges {
-        nodes {
+        node {
           ...RepoDetails
         }
       }
