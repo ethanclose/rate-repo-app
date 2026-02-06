@@ -1,9 +1,15 @@
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import Text from './Text';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   separator: {
     height: 10,
     backgroundColor: '#e1e4e8',
@@ -15,13 +21,26 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-  const { repositories, loading } = useRepositories();
+  const { repositories, loading, error } = useRepositories();
 
-  if (loading) {
-    return <Text>loading...</Text>;
+  if (loading && !repositories) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator
+          size="large"
+          style={{ color: theme.colors.darkRed }}
+        />
+        <Text>Loading repositories...</Text>
+      </View>
+    );
   }
-  if (!repositories) {
-    return <Text>loading...</Text>;
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text color="darkRed">Error: {error.message}</Text>
+      </View>
+    );
   }
 
   const repositoryNodes = repositories
