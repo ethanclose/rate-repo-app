@@ -6,10 +6,12 @@ import { ApolloProvider } from '@apollo/client/react';
 
 import Main from './src/components/Main';
 import createApolloClient from './src/utils/apolloClient';
+import Constants from 'expo-constants';
 
 const apolloClient = createApolloClient();
 
 const App = () => {
+  console.log(JSON.stringify(Constants.expoConfig, null, 2));
   return (
     <>
       <NativeRouter
