@@ -3,6 +3,7 @@ import reactNative from 'eslint-plugin-react-native';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
+import globals from 'globals';
 
 export default [
   {
@@ -10,6 +11,10 @@ export default [
   },
   js.configs.recommended,
   {
+    env: {
+      browser: true,
+      'react-native/react-native': true,
+    },
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       react,
@@ -24,6 +29,9 @@ export default [
         ecmaFeatures: { jsx: true },
       },
       globals: {
+        ...globals.browser, // Adds fetch, window, etc.
+        ...globals.node, // Useful if you have build scripts
+        'react-native/react-native': true, // Specific to your mobile environment
         console: 'readonly',
         __dirname: 'readonly',
         module: 'readonly',

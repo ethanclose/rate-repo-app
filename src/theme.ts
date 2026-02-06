@@ -11,7 +11,7 @@ const theme = {
   },
   fontSizes: {
     body: 14,
-    small: 16,
+    small: 18,
     medium: 20,
     large: 24,
     big: 30,
@@ -21,8 +21,9 @@ const theme = {
   },
   fonts: {
     main: Platform.select({
-      android: 'serif', // test with serif
-      ios: 'American Typewriter', // test with Arial, American Typewriter
+      android: 'System', // test with serif
+      web: 'System', // test with serif
+      ios: 'Arial', // test with Arial, American Typewriter
       default: 'System',
     }),
   },
