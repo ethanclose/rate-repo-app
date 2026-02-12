@@ -1,5 +1,6 @@
 import { StyleSheet, TextInput, Pressable, View } from 'react-native';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-native';
 
 import * as yup from 'yup';
 
@@ -112,6 +113,7 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [signIn] = useSignIn();
 
   const onSubmit = async (values) => {
@@ -121,6 +123,7 @@ const SignIn = () => {
       const data = await signIn({ username, password });
       if (data?.authenticate) {
         console.log('Success:', data.authenticate.accessToken);
+        navigate('/');
       }
     } catch (e) {
       console.log('Login fail:', e.message);
