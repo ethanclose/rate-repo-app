@@ -1,7 +1,10 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
+import { useQuery } from '@apollo/client/react';
+
 import Constants from 'expo-constants';
 import theme from '../theme';
 import AppBarTab from './AppBarTab';
+import { ME } from '../graphql/queries';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,12 +18,23 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const { data } = useQuery(ME, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  // Clever trick thanks to AI to make sure this is a boolean
+  const isLoggedIn = !!data?.me;
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab to="/">Repositories</AppBarTab>
         <AppBarTab to="/BMI">BMI</AppBarTab>
-        <AppBarTab to="/SignIn">Sign In</AppBarTab>
+        {isLoggedIn ? (
+          <AppBarTab to="/SignOut">Sign Out</AppBarTab>
+        ) : (
+          <AppBarTab to="/SignIn">Sign In</AppBarTab>
+        )}
       </ScrollView>
     </View>
   );
