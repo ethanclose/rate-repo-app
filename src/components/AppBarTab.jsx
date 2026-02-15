@@ -21,7 +21,9 @@ const AppBarTab = ({ children, to, ...props }) => {
   const active = pathname === to;
   return (
     <Link to={to} component={Pressable} style={styles.pressable} {...props}>
-      <Text style={{ ...styles.text, color: active ? 'white' : 'gray' }}>{children}</Text>
+      <Text style={{ ...styles.text, color: active ? 'white' : 'gray' }}>
+        {children}
+      </Text>
     </Link>
   );
 };

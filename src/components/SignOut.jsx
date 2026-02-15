@@ -14,7 +14,7 @@ const SignOut = () => {
         await authStorage.removeAccessToken();
         navigate('/SignIn');
         await apolloClient.resetStore();
-      } catch (e) {
+      } catch {
         console.log(
           'ResetStore aborted as expected, but cache is cleared. Thanks AI for helping me fix this. ;)',
         );

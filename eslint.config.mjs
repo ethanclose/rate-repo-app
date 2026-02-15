@@ -4,17 +4,16 @@ import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 import globals from 'globals';
+import jest from 'eslint-plugin-jest';
 
 export default [
   {
     ignores: ['.expo/**', 'node_modules/**', 'babel.config.js'],
   },
   js.configs.recommended,
+  react.configs.flat.recommended,
+  jest.configs['flat/recommended'],
   {
-    env: {
-      browser: true,
-      'react-native/react-native': true,
-    },
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       react,
@@ -31,7 +30,7 @@ export default [
       globals: {
         ...globals.browser, // Adds fetch, window, etc.
         ...globals.node, // Useful if you have build scripts
-        'react-native/react-native': true, // Specific to your mobile environment
+        ...globals.jest, // Required for your testing
         console: 'readonly',
         __dirname: 'readonly',
         module: 'readonly',
