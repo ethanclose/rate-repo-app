@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   languageContainer: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.textGrey,
     borderRadius: 4,
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
 
 const LanguageBox = ({ text }) => (
   <View style={styles.languageContainer}>
-    <Text style={styles.languageText}>{text}</Text>
+    <Text style={styles.languageText} testID="language">
+      {text}
+    </Text>
   </View>
 );
 
@@ -48,13 +50,19 @@ const ItemTitleRow = ({ item }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
+        <Image
+          testID="repositoryImage"
+          style={styles.image}
+          source={{ uri: item.ownerAvatarUrl }}
+        />
       </View>
       <View style={styles.textContainer}>
-        <Text color="primary" fontWeight="bold">
+        <Text testID="fullName" color="primary" fontWeight="bold">
           {item.fullName}
         </Text>
-        <Text color="textGrey">{item.description}</Text>
+        <Text testID="description" color="textGrey">
+          {item.description}
+        </Text>
         <LanguageBox text={item.language} />
       </View>
     </View>

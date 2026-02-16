@@ -21,7 +21,7 @@ export const formatSingleValue = (value) => {
 const Count = ({ text, count }) => {
   return (
     <View style={styles.container}>
-      <Text color="textBlack" fontWeight="bold">
+      <Text testID="countValue" color="textBlack" fontWeight="bold">
         {formatSingleValue(count)}
       </Text>
       <Text color="textGrey">{text}</Text>

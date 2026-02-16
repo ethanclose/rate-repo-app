@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react-native';
+import { render, screen, within } from '@testing-library/react-native';
 import { RepositoryListContainer } from '../../components/RepositoryList';
 
 describe('RepositoryList', () => {
@@ -51,10 +51,61 @@ describe('RepositoryList', () => {
       const repositoryItems = screen.getAllByTestId('repositoryItem');
       const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;
 
-      expect(firstRepositoryItem).toHaveTextContent('jaredpalmer/formik');
-      expect(secondRepositoryItem).toHaveTextContent(
-        'async-library/react-async',
-      );
+      expect(
+        within(firstRepositoryItem).getByTestId('fullName'),
+      ).toHaveTextContent('jaredpalmer/formik');
+      expect(
+        within(firstRepositoryItem).getByTestId('description'),
+      ).toHaveTextContent('Build forms in React, without the tears');
+      expect(
+        within(firstRepositoryItem).getByTestId('language'),
+      ).toHaveTextContent('TypeScript');
+
+      const imageA = within(firstRepositoryItem).getByTestId('repositoryImage');
+      expect(imageA).toHaveProp('source', {
+        uri: 'https://avatars2.githubusercontent.com/u/4060187?v=4',
+      });
+
+      expect(
+        within(firstRepositoryItem).getByTestId('fullName'),
+      ).toHaveTextContent('jaredpalmer/formik');
+
+      expect(
+        within(secondRepositoryItem).getByTestId('fullName'),
+      ).toHaveTextContent('async-library/react-async');
+      expect(
+        within(secondRepositoryItem).getByTestId('description'),
+      ).toHaveTextContent('Flexible promise-based React data loader');
+      expect(
+        within(secondRepositoryItem).getByTestId('language'),
+      ).toHaveTextContent('JavaScript');
+
+      const imageB =
+        within(secondRepositoryItem).getByTestId('repositoryImage');
+      expect(imageB).toHaveProp('source', {
+        uri: 'https://avatars1.githubusercontent.com/u/54310907?v=4',
+      });
+
+      const firstCounts =
+        within(firstRepositoryItem).getAllByTestId('countValue');
+
+      const [firstStars, firstForks, firstReviews, firstRating] = firstCounts;
+
+      expect(firstStars).toHaveTextContent('21.9k');
+      expect(firstForks).toHaveTextContent('1.6k');
+      expect(firstReviews).toHaveTextContent('3');
+      expect(firstRating).toHaveTextContent('88');
+
+      const secondCounts =
+        within(secondRepositoryItem).getAllByTestId('countValue');
+
+      const [secondStars, secondForks, secondReviews, secondRating] =
+        secondCounts;
+
+      expect(secondStars).toHaveTextContent('1.8k'); // 1760 -> 1.8k
+      expect(secondForks).toHaveTextContent('69');
+      expect(secondReviews).toHaveTextContent('3');
+      expect(secondRating).toHaveTextContent('72');
     });
   });
 });

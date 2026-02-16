@@ -14,7 +14,7 @@ describe('Greeting', () => {
   it('renders the correct message based on props', () => {
     render(<Greeting name="Ethan" />);
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.getByText('Hello Ethan!')).toBeDefined();
 
