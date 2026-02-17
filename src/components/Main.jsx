@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Route, Routes, Navigate } from 'react-router-native';
 
 import RepositoryList from './RepositoryList';
+import SingleRepository from './SingleRepository';
 import AppBar from './AppBar';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
@@ -24,6 +25,7 @@ const Main = () => {
         <Route path="/" element={<RepositoryList />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignOut" element={<SignOut />} />
+        <Route path="/repository/:id" element={<SingleRepository />} />
         <Route path="/BMI" element={<BodyMassIndexCalculator />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

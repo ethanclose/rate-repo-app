@@ -8,18 +8,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryItem = ({ item }) => {
-  const onPress = () => {
-    console.log('pressed');
-  };
-
+const RepositoryItem = ({ item, onPress }) => {
   return (
     <Pressable
       onPress={onPress}
+      disabled={!onPress}
       testID="repositoryItem"
       style={({ pressed }) => [
         styles.container,
-        { backgroundColor: pressed ? '#e1e4e8' : 'white' },
+        { backgroundColor: onPress && pressed ? '#e1e4e8' : 'white' },
       ]}
     >
       <ItemTitleRow item={item} />

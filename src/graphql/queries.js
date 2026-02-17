@@ -23,6 +23,23 @@ export const GET_REPOSITORIES = gql`
   ${REPO_DETAILS}
 `;
 
+export const GET_REPOSITORY = gql`
+  query Repository($id: ID!) {
+    repository(id: $id) {
+      id
+      fullName
+      description
+      language
+      stargazersCount
+      forksCount
+      reviewCount
+      ratingAverage
+      ownerAvatarUrl
+      url
+    }
+  }
+`;
+
 export const AUTHENTICATE = gql`
   mutation Authenticate($credentials: AuthenticateInput) {
     authenticate(credentials: $credentials) {
