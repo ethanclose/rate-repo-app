@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryItem = ({ item, onPress }) => {
+const RepositoryItem = ({ item, onPress, children }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -21,6 +21,7 @@ const RepositoryItem = ({ item, onPress }) => {
     >
       <ItemTitleRow item={item} />
       <CountRow item={item} />
+      {children}
     </Pressable>
   );
 };

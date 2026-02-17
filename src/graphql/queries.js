@@ -26,18 +26,10 @@ export const GET_REPOSITORIES = gql`
 export const GET_REPOSITORY = gql`
   query Repository($id: ID!) {
     repository(id: $id) {
-      id
-      fullName
-      description
-      language
-      stargazersCount
-      forksCount
-      reviewCount
-      ratingAverage
-      ownerAvatarUrl
-      url
+      ...RepoDetails
     }
   }
+  ${REPO_DETAILS}
 `;
 
 export const AUTHENTICATE = gql`
