@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import CountRow from './CountRow';
 import ItemTitleRow from './ItemTitleRow';
 
@@ -9,11 +9,22 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryItem = ({ item }) => {
+  const onPress = () => {
+    console.log('pressed');
+  };
+
   return (
-    <View testID="repositoryItem" style={styles.container}>
+    <Pressable
+      onPress={onPress}
+      testID="repositoryItem"
+      style={({ pressed }) => [
+        styles.container,
+        { backgroundColor: pressed ? '#e1e4e8' : 'white' },
+      ]}
+    >
       <ItemTitleRow item={item} />
       <CountRow item={item} />
-    </View>
+    </Pressable>
   );
 };
 
