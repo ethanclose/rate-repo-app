@@ -1,11 +1,6 @@
 import { useState } from 'react';
-import {
-  FlatList,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Pressable,
-} from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigate } from 'react-router-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
@@ -49,30 +44,20 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: theme.colors.backgroundAppBar,
-    gap: 8,
   },
   orderLabel: {
     color: theme.colors.textGrey,
     fontSize: 14,
     marginBottom: 4,
   },
-  orderRow: {
-    flexDirection: 'row',
-    gap: 8,
-    flexWrap: 'wrap',
-  },
-  orderButton: {
+  picker: {
+    marginTop: 4,
+    backgroundColor: '#fff',
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 6,
-    backgroundColor: theme.colors.textGrey,
+    paddingHorizontal: 8,
   },
-  orderButtonSelected: {
-    backgroundColor: theme.colors.green,
-  },
-  orderButtonText: {
-    color: theme.colors.textBlack,
-    fontSize: 14,
+  pickerItem: {
+    fontSize: 28,
   },
 });
 
@@ -81,20 +66,17 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryListHeader = ({ order, onOrderChange }) => (
   <View style={styles.orderHeader}>
     <Text style={styles.orderLabel}>Sort by</Text>
-    <View style={styles.orderRow}>
+    <Picker
+      selectedValue={order}
+      onValueChange={(value) => onOrderChange(value)}
+      style={styles.picker}
+      itemStyle={styles.pickerItem}
+      dropdownIconColor={theme.colors.textBlack}
+    >
       {ORDER_OPTIONS.map((opt) => (
-        <Pressable
-          key={opt.value}
-          style={[
-            styles.orderButton,
-            order === opt.value && styles.orderButtonSelected,
-          ]}
-          onPress={() => onOrderChange(opt.value)}
-        >
-          <Text style={styles.orderButtonText}>{opt.label}</Text>
-        </Pressable>
+        <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
       ))}
-    </View>
+    </Picker>
   </View>
 );
 
