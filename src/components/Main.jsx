@@ -7,7 +7,7 @@ import SingleRepository from './SingleRepository';
 import AppBar from './AppBar';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
-import BodyMassIndexCalculator from './BodyMassIndexForm';
+import CreateReview from './CreateReview';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +26,7 @@ const Main = () => {
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignOut" element={<SignOut />} />
         <Route path="/repository/:id" element={<SingleRepository />} />
-        <Route path="/BMI" element={<BodyMassIndexCalculator />} />
+        <Route path="/createReview" element={<CreateReview />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>
