@@ -32,6 +32,7 @@ const AppBar = () => {
         {isLoggedIn ? (
           <>
             <AppBarTab to="/createReview">Add Review</AppBarTab>
+            <AppBarTab to="/myReviews">My reviews</AppBarTab>
             <AppBarTab to="/SignOut">Sign Out</AppBarTab>
           </>
         ) : (
