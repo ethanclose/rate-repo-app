@@ -1,7 +1,14 @@
-import { useState } from 'react';
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  TextInput,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigate } from 'react-router-native';
+import { useDebounce } from 'use-debounce';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import Text from './Text';
@@ -45,6 +52,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: theme.colors.backgroundAppBar,
   },
+  searchContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: theme.colors.backgroundAppBar,
+  },
+  searchInput: {
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+    fontSize: 14,
+  },
   orderLabel: {
     color: theme.colors.textGrey,
     fontSize: 14,
@@ -63,59 +82,89 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryListHeader = ({ order, onOrderChange }) => (
-  <View style={styles.orderHeader}>
-    <Text style={styles.orderLabel}>Sort by</Text>
-    <Picker
-      selectedValue={order}
-      onValueChange={(value) => onOrderChange(value)}
-      style={styles.picker}
-      itemStyle={styles.pickerItem}
-      dropdownIconColor={theme.colors.textBlack}
-    >
-      {ORDER_OPTIONS.map((opt) => (
-        <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
-      ))}
-    </Picker>
-  </View>
-);
-
-export const RepositoryListContainer = ({
-  repositories,
+const RepositoryListHeader = ({
   order,
   onOrderChange,
-}) => {
-  const navigate = useNavigate();
+  searchKeyword,
+  onSearchChange,
+}) => (
+  <>
+    <View style={styles.searchContainer}>
+      <TextInput
+        placeholder="Search repositories..."
+        value={searchKeyword}
+        onChangeText={onSearchChange}
+        style={styles.searchInput}
+        placeholderTextColor={theme.colors.textGrey}
+      />
+    </View>
+    <View style={styles.orderHeader}>
+      <Text style={styles.orderLabel}>Sort by</Text>
+      <Picker
+        selectedValue={order}
+        onValueChange={(value) => onOrderChange(value)}
+        style={styles.picker}
+        itemStyle={styles.pickerItem}
+        dropdownIconColor={theme.colors.textBlack}
+      >
+        {ORDER_OPTIONS.map((opt) => (
+          <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
+        ))}
+      </Picker>
+    </View>
+  </>
+);
 
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const { order, onOrderChange, searchKeyword, onSearchChange } = this.props;
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ListHeaderComponent={
-        <RepositoryListHeader order={order} onOrderChange={onOrderChange} />
-      }
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <RepositoryItem
-          item={item}
-          onPress={() => navigate(`/repository/${item.id}`)}
-        />
-      )}
-    />
-  );
-};
+    return (
+      <RepositoryListHeader
+        order={order}
+        onOrderChange={onOrderChange}
+        searchKeyword={searchKeyword}
+        onSearchChange={onSearchChange}
+      />
+    );
+  };
+
+  render() {
+    const { repositories, navigate } = this.props;
+
+    const repositoryNodes = repositories
+      ? repositories.edges.map((edge) => edge.node)
+      : [];
+
+    return (
+      <FlatList
+        data={repositoryNodes}
+        ListHeaderComponent={this.renderHeader}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({ item }) => (
+          <RepositoryItem
+            item={item}
+            onPress={() => navigate(`/repository/${item.id}`)}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    );
+  }
+}
 
 const RepositoryList = () => {
+  const navigate = useNavigate();
   const [order, setOrder] = useState('latest');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
 
   const orderConfig =
     ORDER_OPTIONS.find((o) => o.value === order) ?? ORDER_OPTIONS[0];
   const variables = {
     orderBy: orderConfig.orderBy,
     orderDirection: orderConfig.orderDirection,
+    searchKeyword: debouncedSearchKeyword,
   };
 
   const { repositories, loading, error } = useRepositories(variables);
@@ -145,6 +194,9 @@ const RepositoryList = () => {
       repositories={repositories}
       order={order}
       onOrderChange={setOrder}
+      searchKeyword={searchKeyword}
+      onSearchChange={setSearchKeyword}
+      navigate={navigate}
     />
   );
 };
