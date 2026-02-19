@@ -4,13 +4,23 @@ import {
   Text,
   ActivityIndicator,
   StyleSheet,
+  Alert,
+  Button,
 } from 'react-native';
-import { useQuery } from '@apollo/client/react';
+import { useQuery, useMutation } from '@apollo/client/react';
+import { useNavigate } from 'react-router-native';
 import { ME } from '../graphql/queries';
+import { DELETE_REVIEW } from '../graphql/mutations';
 import theme from '../theme';
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, onDelete, onViewRepository }) => {
   const formattedDate = new Date(review.createdAt).toLocaleDateString();
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this review?')) {
+      onDelete(review.id);
+    }
+  };
 
   return (
     <View style={styles.reviewContainer}>
@@ -21,26 +31,67 @@ const ReviewItem = ({ review }) => {
         <Text style={styles.repositoryName}>{review.repository.fullName}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
         <Text style={styles.reviewText}>{review.text}</Text>
+        <View style={styles.actionButtons}>
+          <View style={styles.buttonContainer}>
+            <Button
+              title="View repository"
+              onPress={() => onViewRepository(review.repository.id)}
+              color={theme.colors.primary}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Delete"
+              onPress={handleDelete}
+              color={theme.colors.danger}
+            />
+          </View>
+        </View>
       </View>
     </View>
   );
 };
 
 const UserReviews = () => {
-  const { data, loading, error } = useQuery(ME, {
+  const navigate = useNavigate();
+  const { data, loading, error, refetch } = useQuery(ME, {
     variables: { includeReviews: true },
     fetchPolicy: 'cache-and-network',
   });
+
+  const [deleteReview] = useMutation(DELETE_REVIEW);
 
   if (loading) return <ActivityIndicator />;
   if (error) return <Text>Error: {error.message}</Text>;
 
   const reviews = data?.me?.reviews?.edges.map((edge) => edge.node) || [];
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteReview({
+        variables: { id },
+      });
+      refetch();
+    } catch (err) {
+      console.log('Error:', err);
+      alert('Error: Failed to delete review');
+    }
+  };
+
+  const handleViewRepository = (repositoryId) => {
+    navigate(`/repository/${repositoryId}`);
+  };
+
   return (
     <FlatList
       data={reviews}
-      renderItem={({ item }) => <ReviewItem review={item} />}
+      renderItem={({ item }) => (
+        <ReviewItem
+          review={item}
+          onDelete={handleDelete}
+          onViewRepository={handleViewRepository}
+        />
+      )}
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       ListEmptyComponent={
@@ -89,6 +140,15 @@ const styles = StyleSheet.create({
   reviewText: {
     fontSize: theme.fontSizes.body,
     color: theme.colors.textPrimary,
+    marginBottom: 8,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    marginTop: 8,
+  },
+  buttonContainer: {
+    marginRight: 8,
+    flex: 1,
   },
   separator: {
     height: 10,
