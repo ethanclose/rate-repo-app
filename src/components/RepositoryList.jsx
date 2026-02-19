@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   FlatList,
   View,
@@ -87,10 +87,12 @@ const RepositoryListHeader = ({
   onOrderChange,
   searchKeyword,
   onSearchChange,
+  searchInputRef,
 }) => (
   <>
     <View style={styles.searchContainer}>
       <TextInput
+        ref={searchInputRef}
         placeholder="Search repositories..."
         value={searchKeyword}
         onChangeText={onSearchChange}
@@ -106,6 +108,7 @@ const RepositoryListHeader = ({
         style={styles.picker}
         itemStyle={styles.pickerItem}
         dropdownIconColor={theme.colors.textBlack}
+        mode="dropdown"
       >
         {ORDER_OPTIONS.map((opt) => (
           <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
@@ -116,8 +119,24 @@ const RepositoryListHeader = ({
 );
 
 export class RepositoryListContainer extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    // Only re-render if an actual prop changed (not just repositories data)
+    return (
+      this.props.order !== nextProps.order ||
+      this.props.searchKeyword !== nextProps.searchKeyword ||
+      this.props.repositories?.edges.length !==
+        nextProps.repositories?.edges.length
+    );
+  }
+
   renderHeader = () => {
-    const { order, onOrderChange, searchKeyword, onSearchChange } = this.props;
+    const {
+      order,
+      onOrderChange,
+      searchKeyword,
+      onSearchChange,
+      searchInputRef,
+    } = this.props;
 
     return (
       <RepositoryListHeader
@@ -125,6 +144,7 @@ export class RepositoryListContainer extends React.Component {
         onOrderChange={onOrderChange}
         searchKeyword={searchKeyword}
         onSearchChange={onSearchChange}
+        searchInputRef={searchInputRef}
       />
     );
   };
@@ -148,6 +168,7 @@ export class RepositoryListContainer extends React.Component {
           />
         )}
         keyExtractor={(item) => item.id}
+        removeClippedSubviews={false}
       />
     );
   }
@@ -155,6 +176,7 @@ export class RepositoryListContainer extends React.Component {
 
 const RepositoryList = () => {
   const navigate = useNavigate();
+  const searchInputRef = useRef(null);
   const [order, setOrder] = useState('latest');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
@@ -197,6 +219,7 @@ const RepositoryList = () => {
       searchKeyword={searchKeyword}
       onSearchChange={setSearchKeyword}
       navigate={navigate}
+      searchInputRef={searchInputRef}
     />
   );
 };
