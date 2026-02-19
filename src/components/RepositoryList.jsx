@@ -3,7 +3,7 @@ import {
   FlatList,
   View,
   StyleSheet,
-  ActivityIndicator,
+  // ActivityIndicator,
   TextInput,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
   },
-  orderHeader: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: theme.colors.backgroundAppBar,
-  },
+  // orderHeader: {
+  //   paddingVertical: 12,
+  //   paddingHorizontal: 16,
+  //   backgroundColor: theme.colors.backgroundAppBar,
+  // },
   searchContainer: {
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 14,
   },
-  orderLabel: {
-    color: theme.colors.textGrey,
-    fontSize: 14,
-    marginBottom: 4,
-  },
+  // orderLabel: {
+  //   color: theme.colors.textGrey,
+  //   fontSize: 14,
+  //   marginBottom: 4,
+  // },
   picker: {
     marginTop: 4,
     backgroundColor: '#fff',
@@ -85,23 +85,28 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryListHeader = ({
   order,
   onOrderChange,
-  searchKeyword,
-  onSearchChange,
-  searchInputRef,
-}) => (
-  <>
-    <View style={styles.searchContainer}>
-      <TextInput
-        ref={searchInputRef}
-        placeholder="Search repositories..."
-        value={searchKeyword}
-        onChangeText={onSearchChange}
-        style={styles.searchInput}
-        placeholderTextColor={theme.colors.textGrey}
-      />
-    </View>
-    <View style={styles.orderHeader}>
-      <Text style={styles.orderLabel}>Sort by</Text>
+  searchKeyword, // This is the value from the parent
+  onSearchChange, // This is the setter from the parent
+}) => {
+  // Create local state so the typing is "instant" and doesn't trigger the List
+  const [localValue, setLocalValue] = useState(searchKeyword);
+
+  const onChange = (text) => {
+    setLocalValue(text);
+    onSearchChange(text); // Pass it up to the parent's debouncer
+  };
+
+  return (
+    <>
+      <View style={styles.searchContainer}>
+        <TextInput
+          placeholder="Search repositories..."
+          value={localValue} // Use local value here
+          onChangeText={onChange}
+          style={styles.searchInput}
+          placeholderTextColor={theme.colors.textGrey}
+        />
+      </View>
       <Picker
         selectedValue={order}
         onValueChange={(value) => onOrderChange(value)}
@@ -114,9 +119,10 @@ const RepositoryListHeader = ({
           <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
         ))}
       </Picker>
-    </View>
-  </>
-);
+      ;
+    </>
+  );
+};
 
 export class RepositoryListContainer extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -203,18 +209,18 @@ const RepositoryList = () => {
     searchKeyword: debouncedSearchKeyword,
   };
 
-  const { repositories, loading, error } = useRepositories(variables);
+  const { repositories, error } = useRepositories(variables);
 
-  const showFullLoader = loading && !repositories;
+  // const showFullLoader = loading && !repositories;
 
-  if (showFullLoader) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={theme.colors.darkRed} />
-        <Text>Loading repositories...</Text>
-      </View>
-    );
-  }
+  // if (showFullLoader) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <ActivityIndicator size="large" color={theme.colors.darkRed} />
+  //       <Text>Loading repositories...</Text>
+  //     </View>
+  //   );
+  // }
 
   if (error) {
     return (
