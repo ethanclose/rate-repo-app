@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
   },
-  // orderHeader: {
-  //   paddingVertical: 12,
-  //   paddingHorizontal: 16,
-  //   backgroundColor: theme.colors.backgroundAppBar,
-  // },
+  orderHeader: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: theme.colors.backgroundAppBar,
+  },
   searchContainer: {
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 14,
   },
-  // orderLabel: {
-  //   color: theme.colors.textGrey,
-  //   fontSize: 14,
-  //   marginBottom: 4,
-  // },
+  orderLabel: {
+    color: theme.colors.textGrey,
+    fontSize: 14,
+    marginBottom: 4,
+  },
   picker: {
     marginTop: 4,
     backgroundColor: '#fff',
@@ -101,25 +101,27 @@ const RepositoryListHeader = ({
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="Search repositories..."
-          value={localValue} // Use local value here
+          value={localValue}
           onChangeText={onChange}
           style={styles.searchInput}
           placeholderTextColor={theme.colors.textGrey}
         />
       </View>
-      <Picker
-        selectedValue={order}
-        onValueChange={(value) => onOrderChange(value)}
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        dropdownIconColor={theme.colors.textBlack}
-        mode="dropdown"
-      >
-        {ORDER_OPTIONS.map((opt) => (
-          <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
-        ))}
-      </Picker>
-      ;
+      <View style={styles.orderHeader}>
+        <Text style={styles.orderLabel}>Sort by</Text>
+        <Picker
+          selectedValue={order}
+          onValueChange={(value) => onOrderChange(value)}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          dropdownIconColor={theme.colors.textBlack}
+          mode="dropdown"
+        >
+          {ORDER_OPTIONS.map((opt) => (
+            <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
+          ))}
+        </Picker>
+      </View>
     </>
   );
 };
