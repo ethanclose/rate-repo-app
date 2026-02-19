@@ -150,7 +150,14 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
-    const { repositories, navigate } = this.props;
+    const {
+      repositories,
+      navigate,
+      order,
+      onOrderChange,
+      searchKeyword,
+      onSearchChange,
+    } = this.props;
 
     const repositoryNodes = repositories
       ? repositories.edges.map((edge) => edge.node)
@@ -159,7 +166,15 @@ export class RepositoryListContainer extends React.Component {
     return (
       <FlatList
         data={repositoryNodes}
-        ListHeaderComponent={this.renderHeader}
+        // Pass the JSX directly. FlatList handles this much better.
+        ListHeaderComponent={
+          <RepositoryListHeader
+            order={order}
+            onOrderChange={onOrderChange}
+            searchKeyword={searchKeyword}
+            onSearchChange={onSearchChange}
+          />
+        }
         ItemSeparatorComponent={ItemSeparator}
         renderItem={({ item }) => (
           <RepositoryItem
@@ -168,7 +183,6 @@ export class RepositoryListContainer extends React.Component {
           />
         )}
         keyExtractor={(item) => item.id}
-        removeClippedSubviews={false}
       />
     );
   }
@@ -191,13 +205,12 @@ const RepositoryList = () => {
 
   const { repositories, loading, error } = useRepositories(variables);
 
-  if (loading && !repositories) {
+  const showFullLoader = loading && !repositories;
+
+  if (showFullLoader) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator
-          size="large"
-          style={{ color: theme.colors.darkRed }}
-        />
+        <ActivityIndicator size="large" color={theme.colors.darkRed} />
         <Text>Loading repositories...</Text>
       </View>
     );
