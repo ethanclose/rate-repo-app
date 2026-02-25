@@ -51,12 +51,27 @@ const ReviewItem = ({ review }) => {
 const SingleRepository = () => {
   const { id } = useParams();
 
-  const { data, loading, error } = useQuery(GET_REPOSITORY, {
-    variables: { id },
+  const { data, loading, error, fetchMore } = useQuery(GET_REPOSITORY, {
+    variables: { id, first: 4 }, // Start with a small number for testing
     fetchPolicy: 'cache-and-network',
   });
 
-  if (loading) return <ActivityIndicator />;
+  const onEndReach = () => {
+    const canFetchMore =
+      !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) return;
+
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        id,
+        first: 2,
+      },
+    });
+  };
+
+  if (loading && !data) return <ActivityIndicator />;
   if (error) return <Text>Error: {error.message}</Text>;
 
   const repository = data?.repository;
@@ -74,6 +89,8 @@ const SingleRepository = () => {
         </View>
       )}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.1}
     />
   );
 };
