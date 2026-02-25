@@ -214,11 +214,14 @@ const RepositoryList = () => {
     searchKeyword: debouncedSearchKeyword,
   };
 
-  const { repositories, error } = useRepositories(variables);
+  const { repositories, fetchMore, error } = useRepositories({
+    first: 3,
+    ...variables,
+  });
 
   const onEndReach = () => {
     console.log('You have reached the end of the list');
-    // Eventually, you will call fetchMore() here
+    fetchMore();
   };
 
   // const showFullLoader = loading && !repositories;
