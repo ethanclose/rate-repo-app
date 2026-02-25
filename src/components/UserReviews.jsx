@@ -4,7 +4,6 @@ import {
   Text,
   ActivityIndicator,
   StyleSheet,
-  Alert,
   Button,
 } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client/react';

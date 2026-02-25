@@ -165,6 +165,7 @@ export class RepositoryListContainer extends React.Component {
       onOrderChange,
       searchKeyword,
       onSearchChange,
+      onEndReach,
     } = this.props;
 
     const repositoryNodes = repositories
@@ -191,6 +192,8 @@ export class RepositoryListContainer extends React.Component {
           />
         )}
         keyExtractor={(item) => item.id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
@@ -212,6 +215,11 @@ const RepositoryList = () => {
   };
 
   const { repositories, error } = useRepositories(variables);
+
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+    // Eventually, you will call fetchMore() here
+  };
 
   // const showFullLoader = loading && !repositories;
 
@@ -241,6 +249,7 @@ const RepositoryList = () => {
       onSearchChange={setSearchKeyword}
       navigate={navigate}
       searchInputRef={searchInputRef}
+      onEndReach={onEndReach}
     />
   );
 };
